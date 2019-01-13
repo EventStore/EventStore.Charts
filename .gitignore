@@ -20,3 +20,6 @@ tmp
 logs
 build
 CLUSTER
+
+# FAKE
+.fake

@@ -5,4 +5,4 @@ steps:
     working_directory: ${{main_clone}}
     description: Linting chart
     commands:
-      - ct lint --config test/ct.yaml
+      - ct lint --charts eventstore --validate-maintainers=false

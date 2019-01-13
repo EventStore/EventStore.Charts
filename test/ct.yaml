@@ -1,7 +1,0 @@
-remote: k8s
-target-branch: master
-chart-dirs:
-  - .
-excluded-charts:
-  - common
-helm-extra-args: --timeout 4000

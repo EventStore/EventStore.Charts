@@ -26,7 +26,7 @@ Target.create "Lint" (fun _ ->
     Trace.trace "Linting chart..."
     let runArgs = sprintf "--rm -v \"%s:/workdir\"" buildDir
     let imageArg = sprintf "%s:%s" lintImage lintImageTag
-    let lintCommand = "ct lint --charts /workdir/eventstore"
+    let lintCommand = "ct lint --charts /workdir/eventstore --validate-maintainers=false"
     let dockerArgs = sprintf "run %s %s %s" runArgs imageArg lintCommand
     exec "docker" dockerArgs)
 

@@ -4,9 +4,11 @@
 functional database with Complex Event Processing in JavaScript.
 
 ## TL;DR;
+
 ```
-> helm install stable/eventstore
+helm install stable/eventstore
 ```
+
 > The default username and password for the admin interface
 is `admin:changeit`.
 
@@ -24,14 +26,17 @@ using the [Helm](https://helm.sh) package manager.
 ## Installing the Chart
 
 To install the Event Store chart with the release name `eventstore`:
+
 ```
-> helm install -n eventstore stable/eventstore
+helm install -n eventstore stable/eventstore
 ```
 
 To install the Event Store chart with a custom admin password:
+
 ```
-> helm install -n eventstore stable/eventstore --set 'admin.password=<your admin password>'
+helm install -n eventstore stable/eventstore --set 'admin.password=<your admin password>'
 ```
+
 > This triggers Helm to run a post-install Job which resets the admin password using
 the Event Store HTTP API. You can then use the username `admin` and the password set 
 in the above command to log into the admin interface.
@@ -44,9 +49,11 @@ that can be configured during installation.
 
 Delete the `eventstore` release.
 
+
 ```
-$ helm delete eventstore --purge
+helm delete eventstore --purge
 ```
+
 > This command removes all the Kubernetes components 
 associated with the chart and deletes the release.
 

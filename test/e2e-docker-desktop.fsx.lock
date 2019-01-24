@@ -49,6 +49,8 @@ NUGET
       FSharp.Core (>= 4.2.3)
       System.Reactive (>= 4.0)
     FSharp.Core (4.6)
+    FSharp.Data (3.0)
+      FSharp.Core (>= 4.3.4)
     Microsoft.NETCore.Platforms (2.2)
     Microsoft.NETCore.Targets (2.1)
     Microsoft.Win32.Primitives (4.3)

@@ -1,6 +1,6 @@
 remote: k8s
 target-branch: master
-chart-dirs:
-  - stable
+charts:
+  - stable/eventstore
 excluded-charts: []
 helm-extra-args: --timeout 4000

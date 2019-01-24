@@ -1,5 +1,6 @@
 // installs the FAKE dependencies
 #r "paket:
+nuget FSharp.Data
 nuget Fake.IO.FileSystem
 nuget Fake.Core.Target //"
 // loads the intellisense script for IDE support
@@ -7,6 +8,22 @@ nuget Fake.Core.Target //"
 
 open Fake.Core
 open Fake.IO
+open FSharp.Data
+open System.Text.RegularExpressions
+
+type DockerInspectProvider = JsonProvider<"""
+[
+    {
+        "Id": "0bf71edcb5d7bd179d3ef8800128bc379e8527e9bba203a551d4b44b7b716650",
+        "Created": "2019-01-24T13:33:58.8443439Z",
+        "Path": "kube-apiserver",
+        "Args": [
+            "--advertise-address=192.168.65.3",
+            "--secure-port=6443"
+        ]
+    }
+]
+""">
 
 module Path =
     let toPosix path =
@@ -24,27 +41,22 @@ let lintImageTag = "latest"
 
 /// ref: https://fake.build/core-process.html
 let execRaw commandPath args =
-    CreateProcess.fromRawCommand commandPath args
-    |> CreateProcess.ensureExitCode
-    |> CreateProcess.redirectOutput
-    |> Proc.run
-    |> fun result -> result.Result.Output
+    let processResult =
+        CreateProcess.fromRawCommand commandPath args
+        |> CreateProcess.redirectOutput
+        |> Proc.run
+    if processResult.ExitCode <> 0 then
+        failwithf "exit code: %d; error: %s" processResult.ExitCode processResult.Result.Error
+    processResult.Result.Output
+    |> String.trim
 
-let execRawLine commandPath args =
-    CreateProcess.fromRawCommandLine commandPath args
-    |> CreateProcess.ensureExitCode
-    |> CreateProcess.redirectOutput
-    |> Proc.run
-    |> fun result -> result.Result.Output
+let docker (args:seq<string>) = execRaw "docker.exe" args
 
-let exec command args =
-    let exitCode = Shell.Exec(command, args)
-    if exitCode <> 0 then failwithf "%s %s failed" command args
+Target.create "Default" (fun _ ->
+    Trace.trace "EventStore.Charts")
 
-let dockerExec = exec "docker exec"
-
-let createTestContainer () =
-    execRaw "docker.exe"
+Target.create "Create Test Container" (fun _ ->
+    docker
         [ "container"
           "run"
           "--interactive"
@@ -56,92 +68,161 @@ let createTestContainer () =
           "/workdir"
           sprintf "%s:%s" lintImage lintImageTag
           "cat" ]
+    |> String.trim
+    |> FakeVar.set "containerId")
 
-let getApiServerContainerId () =
+Target.createFinal "Remove Test Container" (fun _ ->
+    let containerId = FakeVar.getOrFail "containerId"
+    docker
+        [ "container"
+          "rm"
+          "--force"
+          containerId ]
+    |> ignore)
+
+Target.create "Get API Server" (fun _ ->
     let apiServerContainerId = 
-        execRaw "docker.exe"
+        docker
             [ "container"
               "list"
               "--filter" 
               "name=k8s_kube-apiserver"
-              "--format" 
+              "--format"
               "{{ .ID }}" ]
     if apiServerContainerId = "" then
         failwith "ERROR: API-Server container not found. Make sure 'Show system containers' is enabled in Docker Desktop 'Preferences'!"
     apiServerContainerId
+    |> FakeVar.set "apiServerContainerId")
 
 let getApiServerArg apiServerContainerId arg =
-    let arg = sprintf "container inspect %s | jq ." apiServerContainerId
-    execRawLine "docker.exe" arg
-    //   sprintf """ %s | jq -r ".[].Args[] | capture("%s=(?<arg>.*)") | .arg" """ apiServerContainerId arg ]
+    let getArg arg input =
+        let pattern = sprintf "%s=(.*)" arg
+        let m = Regex.Match(input, pattern)
+        if m.Success then m.Groups.[1].Value
+        else ""
+    let argValue =
+        docker        
+            [ "container"
+              "inspect"
+              apiServerContainerId ]
+        |> DockerInspectProvider.Parse
+        |> Array.head
+        |> fun result -> result.Args
+        |> String.concat "\n"
+        |> getArg arg
+    if argValue = "" then
+        failwithf "could not find match for %s" arg
+    argValue
 
-let configureKubectl home containerId apiServerId ipAddress port =
-    sprintf "%s/.kube %s:/root/.kube" home containerId 
-    |> exec "docker cp"
+Target.create "Configure kubectl" (fun _ ->
+    let containerId = FakeVar.getOrFail "containerId"
+    let apiServerContainerId = FakeVar.getOrFail "apiServerContainerId"
+    let ipAddress = getApiServerArg apiServerContainerId "--advertise-address"
+    let port = getApiServerArg apiServerContainerId "--secure-port"
+    docker
+        [ "cp"
+          sprintf "%s/.kube" homeDir 
+          sprintf "%s:/root/.kube" containerId ]
+    |> ignore
+    
+    docker
+        [ "exec"
+          containerId
+          "kubectl"
+          "config"
+          "set-cluster"
+          "docker-for-desktop-cluster"
+          sprintf "--server=https://%s:%s" ipAddress port ]
+    |> ignore
 
-    sprintf """ "%s" kubectl config set-cluster docker-for-desktop-cluster "--server=https://%s:%s" """ 
-        containerId 
-        ipAddress 
-        port
-    |> dockerExec
+    docker
+        [ "exec"
+          containerId
+          "kubectl"
+          "config"
+          "set-cluster"
+          "docker-for-desktop-cluster"
+          "--insecure-skip-tls-verify=true" ]
+    |> ignore
 
-    sprintf """ "%s" kubectl config set-cluster docker-for-desktop-cluster --insecure-skip-tls-verify=true """
-        containerId
-    |> dockerExec
+    docker
+        [ "exec"
+          containerId
+          "kubectl"
+          "config"
+          "use-context"
+          "docker-for-desktop" ]
+    |> ignore)
 
-    sprintf """ "%s" kubectl config use-context docker-for-desktop """
-        containerId
-    |> dockerExec
+Target.create "Run Tillerless" (fun _ ->
+    let containerId = FakeVar.getOrFail "containerId"
+    docker
+        [ "exec"
+          containerId
+          "apk"
+          "add"
+          "bash" ]
+    |> ignore
 
-let runTillerless containerId =
-    sprintf """ "%s" apk add bash """ 
-        containerId
-    |> dockerExec
+    docker
+        [ "exec"
+          containerId
+          "helm"
+          "init"
+          "--client-only" ]
+    |> ignore
 
-    sprintf """ "%s" helm init --client-only """
-        containerId
-    |> dockerExec
+    docker
+        [ "exec"
+          containerId
+          "helm"
+          "plugin"
+          "install"
+          "https://github.com/rimusz/helm-tiller" ]
+    |> ignore
 
-    sprintf """ "%s" helm plugin install https://github.com/rimusz/helm-tiller """
-        containerId
-    |> dockerExec
+    docker
+        [ "exec"
+          containerId
+          "bash"
+          "-c"
+          "helm tiller start-ci >/dev/null 2>&1 &" ]
+    |> ignore
 
-    sprintf """ "%s" bash -c 'echo "Starting Tiller..."; helm tiller start-ci >/dev/null 2>&1 &' """
-        containerId
-    |> dockerExec
+    docker
+        [ "exec"
+          containerId
+          "bash"
+          "-c"
+          "while ! nc -z localhost 44134; do sleep 1; done" ]
+    |> ignore)
 
-    sprintf """ "%s" bash -c 'echo "Waiting Tiller to launch on 44134..."; while ! nc -z localhost 44134; do sleep 1; done; echo "Tiller launched..."' """
-        containerId
-    |> dockerExec
-
-let runTest containerId =
-    sprintf """ -e HELM_HOST=127.0.0.1:44134 -e HELM_TILLER_SILENT=true "%s" ct install --config /workdir/test/ct.yaml """
-        containerId
-    |> dockerExec
-
-
-Target.create "Default" (fun _ ->
-    Trace.trace "EventStore.Charts")
 
 Target.create "Test" (fun _ ->
-    Trace.trace "Running e2e test..."
-    let log label message = sprintf "%s: %s" label message |> Trace.trace
-    let containerId = createTestContainer ()
-    log "container id" containerId
-    let apiServerId = getApiServerContainerId ()
-    log "api server id" apiServerId
-    let ipAddress = getApiServerArg containerId "--advertise-address"
-    log "ip address" ipAddress
-    let port = getApiServerArg containerId "--secure-port"
-    log "port" port
-    // configureKubectl homeDir containerId apiServerId ipAddress port
-    // runTillerless containerId
-    // runTest containerId
-    Trace.trace "Success!")
+    let containerId = FakeVar.getOrFail "containerId"
+    docker
+        [ "exec"
+          "-e"
+          "HELM_HOST=127.0.0.1:44134"
+          "-e"
+          "HELM_TILLER_SILENT=true"
+          containerId
+          "ct"
+          "install"
+          "--config"
+          "/workdir/test/ct.yaml" ]
+    |> ignore
+)
 
 open Fake.Core.TargetOperators
 
+Target.activateFinal "Remove Test Container"
+
 "Default"
+ ==> "Create Test Container"
+ ==> "Get API Server"
+ ==> "Configure kubectl"
+ ==> "Run Tillerless"
  ==> "Test"
 
 Target.runOrDefault "Default"

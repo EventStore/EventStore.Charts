@@ -1,8 +1,0 @@
-version: '1.0'
-steps:
-  lint:
-    image: quay.io/helmpack/chart-testing:latest
-    working_directory: ${{main_clone}}
-    description: Linting chart
-    commands:
-      - ct lint --charts eventstore --validate-maintainers=false

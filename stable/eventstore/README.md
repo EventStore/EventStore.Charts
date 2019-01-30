@@ -5,7 +5,9 @@ functional database with Complex Event Processing in JavaScript.
 
 ## TL;DR;
 ```
-> helm install stable/eventstore
+> helm repo add eventstore https://eventstore.github.io/EventStore.Charts
+> helm repo update
+> helm install eventstore/eventstore
 ```
 > The default username and password for the admin interface
 is `admin:changeit`.
@@ -23,14 +25,20 @@ using the [Helm](https://helm.sh) package manager.
 
 ## Installing the Chart
 
+Add the Event Store Charts repository.
+```
+> helm repo add eventstore https://eventstore.github.io/EventStore.Charts
+> helm repo update
+```
+
 To install the Event Store chart with the release name `eventstore`:
 ```
-> helm install -n eventstore stable/eventstore
+> helm install -n eventstore eventstore/eventstore
 ```
 
 To install the Event Store chart with a custom admin password:
 ```
-> helm install -n eventstore stable/eventstore --set 'admin.password=<your admin password>'
+> helm install -n eventstore eventstore/eventstore --set 'admin.password=<your admin password>'
 ```
 > This triggers Helm to run a post-install Job which resets the admin password using
 the Event Store HTTP API. You can then use the username `admin` and the password set 

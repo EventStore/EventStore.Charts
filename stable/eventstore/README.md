@@ -7,7 +7,7 @@ functional database with Complex Event Processing in JavaScript.
 ```
 > helm repo add eventstore https://eventstore.github.io/EventStore.Charts
 > helm repo update
-> helm install eventstore/eventstore
+> helm install eventstore/eventstore --name eventstore-cluster
 ```
 > The default username and password for the admin interface
 is `admin:changeit`.

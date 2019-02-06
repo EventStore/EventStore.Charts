@@ -49,6 +49,18 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: EVENTSTORE_GOSSIP_INTERVAL_MS
+              value: {{ .Values.GossipIntervalMs }}
+            - name: EVENTSTORE_GOSSIP_TIMEOUT_MS
+              value: {{ .Values.GossipTimeoutMs }}
+            - name: EVENTSTORE_INT_TCP_HEARTBEAT_INTERVAL
+              value: {{ .Values.IntTcpHeartbeatInterval }}
+            - name: EVENTSTORE_INT_TCP_HEARTBEAT_TIMEOUT
+              value: {{ .Values.IntTcpHeartbeatTimeout }}
+            - name: EVENTSTORE_EXT_TCP_HEARTBEAT_INTERVAL
+              value: {{ .Values.ExtTcpHeartbeatInterval }}
+            - name: EVENTSTORE_EXT_TCP_HEARTBEAT_TIMEOUT
+              value: {{ .Values.ExtTcpHeartbeatTimeout }}            
           ports:
             - containerPort: {{ .Values.intTcpPort }}
             - containerPort: {{ .Values.extTcpPort }}

@@ -3,7 +3,30 @@ entries:
   eventstore:
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-    created: 2019-01-30T08:46:40.6241735-05:00
+    created: 2019-02-07T16:52:28.460901543+01:00
+    description: A Helm chart for Kubernetes EventStore.
+    digest: b328c5794fd7a7c8f1f802144d4c351e09242d1107e25ea1dd840bf7ab8ad102
+    home: https://eventstore.org/
+    icon: https://eventstore.org/images/ouro-full.svg
+    keywords:
+    - eventstore
+    maintainers:
+    - email: ameier38@gmail.com
+      name: ameier38
+    - email: jhinds2010@gmail.com
+      name: jhinds
+    - email: riccardo@dinuzzo.it
+      name: riccardone
+    name: eventstore
+    sources:
+    - https://github.com/EventStore/eventstore-docker
+    - https://github.com/EventStore/EventStore
+    urls:
+    - https://eventstore.github.io/EventStore.Charts/eventstore-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v1
+    appVersion: 4.1.1-hotfix1
+    created: 2019-02-07T16:52:28.460459954+01:00
     description: A Helm chart for Kubernetes EventStore.
     digest: 8b4974e422069914c1fe4a8203bca4947a1ebe91c8978c0ed4857be811eb7cad
     home: https://eventstore.org/
@@ -24,4 +47,4 @@ entries:
     urls:
     - https://eventstore.github.io/EventStore.Charts/eventstore-0.1.0.tgz
     version: 0.1.0
-generated: 2019-01-30T08:46:40.6231761-05:00
+generated: 2019-02-07T16:52:28.459916483+01:00

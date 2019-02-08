@@ -85,6 +85,12 @@ gossipAllowedDiffMs: 600000
 ## ref: https://eventstore.org/docs/server/command-line-arguments/index.html#parameter-list
 ## example:
 ##  EVENTSTORE_RUN_PROJECTIONS: System
+GossipIntervalMs: 2000
+GossipTimeoutMs: 4000
+IntTcpHeartbeatInterval: 1500
+IntTcpHeartbeatTimeout: 3000
+ExtTcpHeartbeatInterval: 1500
+ExtTcpHeartbeatTimeout: 3000
 eventStoreConfig: {}
 
 ## Persist data to a persistent volume

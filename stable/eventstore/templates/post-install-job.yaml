@@ -12,7 +12,7 @@ metadata:
     "helm.sh/hook": post-install
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
-  activeDeadlineSeconds: 60
+  activeDeadlineSeconds: 300
   template:
     metadata:
       name: {{ include "eventstore.fullname" . }}-post-install

@@ -1,6 +1,7 @@
 #### PR Checklist
 [Place an '[x]' (no spaces) in all applicable fields. Please remove unrelated fields.]
 - [ ] Chart Version bumped
+- [ ] Chart packaged and index updated (you can use `./release`)
 - [ ] CHANGELOG.md updated
 - [ ] Variables and other changes are documented in the README.md
 

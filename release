@@ -1,0 +1,20 @@
+#!/bin/bash  
+# automates releasing new versions of this chart:
+# 1. packages chart
+# 2. updates index 
+set -e
+
+cd "$(dirname "$0")"
+
+version=$(grep "version: " stable/eventstore/Chart.yaml | sed 's/version://')
+
+echo "Release version $version?  "
+read -s -n1 -p "[y/N]" bumped
+[ "$bumped" = y ] || { echo -e "\nAborting"; exit 1; }
+echo 
+
+helm package stable/eventstore > /dev/null
+mv eventstore-*.tgz docs
+echo Packaged chart version $version
+helm repo index docs --url https://eventstore.github.io/EventStore.Charts
+echo Updated index.yaml

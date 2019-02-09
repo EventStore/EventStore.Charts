@@ -19,7 +19,7 @@ This repository hosts the official Event Store Helm charts.
 ### Testing
 On Windows (you will need [FAKE](https://fake.build/fake-gettingstarted.html)):
 ```
-> fake build -f test/e2e-docker-desktop-fsx -t Test
+> fake build -f test/e2e-docker-desktop.fsx -t Test
 ```
 On macOS:
 ```

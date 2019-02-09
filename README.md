@@ -26,13 +26,11 @@ On macOS:
 > ./e2e-docker4mac.sh
 ```
 
-### Packaging
-```
-> helm package stable/eventstore
-> mv eventstore-<version>.tgz docs
-```
+### Releasing a new version
 
-### Indexing
+1. Bump the `version` in `stable/eventstore/Chart.yaml`
+2. Release a new version: 
+```bash
+./release
 ```
-> helm repo index docs --url https://eventstore.github.io/EventStore.Charts
-```
+> The `release` script packages the chart and updates the index.yaml accordingly 

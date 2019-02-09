@@ -40,6 +40,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "eventstore.fullname" . }}-env
+          env: 
+            - name: EVENTSTORE_INT_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: EVENTSTORE_EXT_IP
+              value: "0.0.0.0"
           ports:
             - containerPort: {{ .Values.intTcpPort }}
             - containerPort: {{ .Values.extTcpPort }}

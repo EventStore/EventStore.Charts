@@ -8,10 +8,6 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
-  # Binds to this interface internally.
-  EVENTSTORE_INT_IP: "0.0.0.0"
-  # Binds to this interface externally.
-  EVENTSTORE_EXT_IP: "0.0.0.0"
   ## Internal TCP port.
   EVENTSTORE_INT_TCP_PORT: {{ quote .Values.intTcpPort }}
   ## External TCP port.

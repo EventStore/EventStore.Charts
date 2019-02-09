@@ -46,9 +46,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: EVENTSTORE_EXT_IP
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.podIP
+              value: "0.0.0.0"
           ports:
             - containerPort: {{ .Values.intTcpPort }}
             - containerPort: {{ .Values.extTcpPort }}

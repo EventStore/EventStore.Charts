@@ -66,7 +66,7 @@ podDisruptionBudget:
   ##
   ## Number of pods that can be unavailable after eviction.
   # maxUnavailable: 1
-## 
+##
 ## External IP Address. Remove or set to `null` to disable connections from outside the cluster.
 extIp: 0.0.0.0
 ##

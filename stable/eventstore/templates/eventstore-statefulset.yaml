@@ -46,6 +46,14 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: EVENTSTORE_EXT_IP
+            {{- if .Values.extIp }}
+              value: {{ .Values.extIp }}
+            {{- else }}
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            {{- end }}
+            - name: EVENTSTORE_EXT_IP_ADVERTISE_AS
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP

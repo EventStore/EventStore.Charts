@@ -1,4 +1,7 @@
 # Changelog 
+# 
+## 0.1.4: February 16, 2018
+- execute post-install script also on post-upgrade
  
 ## 0.1.3: February 14, 2018
 - set EVENTSTORE_EXT_IP to '0.0.0.0' (fixes `kubectl port-forward`)

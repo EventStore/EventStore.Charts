@@ -125,6 +125,8 @@ resources: {}
 
 nodeSelector: {}
 
+podAnnotations: {}
+
 tolerations: []
 
 affinity: {}

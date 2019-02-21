@@ -1,5 +1,8 @@
 # Changelog 
 # 
+## 0.1.5: February 20, 2018
+- Make pod annotations configurable
+
 ## 0.1.4: February 16, 2018
 - execute post-install script also on post-upgrade
  

@@ -92,6 +92,7 @@ The following table lists the configurable parameters of the Event Store chart a
 | `persistence.annotations`            | Annotations for PVC                                                           | `{}`                         |
 | `resources`                          | CPU/Memory resource request/limits                                            | Memory: `256Mi`, CPU: `100m` |
 | `nodeSelector`                       | Node labels for pod assignment                                                | `{}`                         |
+| `podAnnotations`                     | Pod annotations                                                               | `{}`                         |
 | `tolerations`                        | Toleration labels for pod assignment                                          | `[]`                         |
 | `affinity`                           | Affinity settings for pod assignment                                          | `{}`                         |
 

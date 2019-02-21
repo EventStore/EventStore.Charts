@@ -20,6 +20,10 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "eventstore.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+{{ toYaml .Values.podAnnotations | indent 8 }}
+      {{- end }}
     spec:      
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

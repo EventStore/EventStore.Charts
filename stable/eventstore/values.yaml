@@ -90,6 +90,13 @@ gossipAllowedDiffMs: 600000
 ##  EVENTSTORE_RUN_PROJECTIONS: System
 eventStoreConfig: {}
 
+##
+## Schedule a scavenging CronJob
+## ref: https://eventstore.org/docs/server/scavenging/
+scavenging:
+  enabled: false
+  schedule: 0 2 * * *
+
 ## Persist data to a persistent volume
 persistence:
   enabled: false

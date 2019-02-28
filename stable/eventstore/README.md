@@ -84,6 +84,8 @@ The following table lists the configurable parameters of the Event Store chart a
 | `extTcpPort`                         | External TCP port                                                             | `1113`                       |
 | `gossipAllowedDiffMs`                | The amount of drift, in ms, between clocks on nodes before gossip is rejected | `600000`                     |
 | `eventStoreConfig`                   | Additional Event Store parameters                                             | `{}`                         |
+| `scavenging.enabled`                 | Enable the scavenging CronJob for all nodes                                   | `false`                      |
+| `scavenging.schedule`                | The schedule to use for the scavenging CronJob                                | `0 2 * * *`                  |
 | `persistence.enabled`                | Enable persistence using PVC                                                  | `false`                      |
 | `persistence.existingClaim`          | Provide an existing PVC                                                       | `nil`                        |
 | `persistence.accessMode`             | Access Mode for PVC                                                           | `ReadWriteOnce`              |

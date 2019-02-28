@@ -1,5 +1,8 @@
 # Changelog 
 # 
+## 0.2.0: February 28, 2018
+- Add manifests that allow the user to schedule a scavenging CronJob
+
 ## 0.1.5: February 20, 2018
 - Make pod annotations configurable
 

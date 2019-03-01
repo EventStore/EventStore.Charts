@@ -1,21 +1,23 @@
 # Event Store
 
-[Event Store](https://eventstore.org/) is an open-source, 
+[Event Store](https://eventstore.org/) is an open-source,
 functional database with Complex Event Processing in JavaScript.
 
 ## TL;DR;
+
 ```
 > helm repo add eventstore https://eventstore.github.io/EventStore.Charts
 > helm repo update
 > helm install eventstore/eventstore
 ```
+
 > The default username and password for the admin interface
-is `admin:changeit`.
+> is `admin:changeit`.
 
 ## Introduction
 
-This chart bootstraps a [Event Store](https://hub.docker.com/r/eventstore/eventstore/) 
-deployment on a [Kubernetes](http://kubernetes.io) cluster 
+This chart bootstraps a [Event Store](https://hub.docker.com/r/eventstore/eventstore/)
+deployment on a [Kubernetes](http://kubernetes.io) cluster
 using the [Helm](https://helm.sh) package manager.
 
 ## Prerequisites
@@ -26,27 +28,50 @@ using the [Helm](https://helm.sh) package manager.
 ## Installing the Chart
 
 Add the Event Store Charts repository.
+
 ```
 > helm repo add eventstore https://eventstore.github.io/EventStore.Charts
 > helm repo update
 ```
 
 To install the Event Store chart with the release name `eventstore`:
+
 ```
 > helm install -n eventstore eventstore/eventstore
 ```
 
 To install the Event Store chart with a custom admin password:
+
 ```
 > helm install -n eventstore eventstore/eventstore --set 'admin.password=<your admin password>'
 ```
-> This triggers Helm to run a post-install Job which resets the admin password using
-the Event Store HTTP API. You can then use the username `admin` and the password set 
-in the above command to log into the admin interface.
 
-The above commands install Event Store with the default configuration. 
-The [configuration](#configuration) section below lists the parameters 
+> This triggers Helm to run a post-install Job which resets the admin password using
+> the Event Store HTTP API. You can then use the username `admin` and the password set
+> in the above command to log into the admin interface.
+
+The above commands install Event Store with the default configuration.
+The [configuration](#configuration) section below lists the parameters
 that can be configured during installation.
+
+## Persistent Storage
+
+If you need persistent storage during upgrades or scaling, you need to configure a `[StorageClass](https://kubernetes.io/docs/concepts/storage/storage-classes/)` for the storage claim. For example, with AWS:
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gp2
+  labels:
+    k8s-addon: storage-aws.addons.k8s.io
+  annotations:
+    storageclass.beta.kubernetes.io/is-default-class: "true"
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+reclaimPolicy: Retain
+```
 
 ## Deleting the Chart
 
@@ -55,15 +80,16 @@ Delete the `eventstore` release.
 ```
 $ helm delete eventstore --purge
 ```
-> This command removes all the Kubernetes components 
-associated with the chart and deletes the release.
+
+> This command removes all the Kubernetes components
+> associated with the chart and deletes the release.
 
 ## Configuration
 
 The following table lists the configurable parameters of the Event Store chart and their default values.
 
 | Parameter                            | Description                                                                   | Default                      |
-|--------------------------------------|-------------------------------------------------------------------------------|------------------------------|
+| ------------------------------------ | ----------------------------------------------------------------------------- | ---------------------------- |
 | `image`                              | Container image name                                                          | `eventstore/eventstore`      |
 | `imageTag`                           | Container image tag                                                           | `release-4.1.1-hotfix1`      |
 | `imagePullPolicy`                    | Container pull policy                                                         | `IfNotPresent`               |
@@ -100,6 +126,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 or create a `values.yaml` file and use `helm install --values values.yaml`.
 
 ## Additional Resources
+
 - [Event Store Docs](https://eventstore.org/docs/)
 - [Event Store Parameters](https://eventstore.org/docs/server/command-line-arguments/index.html#parameter-list)
 - [Event Store Docker Container](https://github.com/EventStore/eventstore-docker)

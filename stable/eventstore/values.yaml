@@ -53,6 +53,9 @@ admin:
   ## NGINX image used for admin interface proxy.
   proxyImage: nginx
   proxyImageTag: latest
+  ##
+  ## The dns resolver which is being used in the cluster (e.g., kube-dns, coredns)
+  dnsResolver: kube-dns
 ##
 ## Configure a pod disruption budget for the Event Store StatefulSet.
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/

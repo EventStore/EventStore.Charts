@@ -53,6 +53,9 @@ admin:
   ## NGINX image used for admin interface proxy.
   proxyImage: nginx
   proxyImageTag: latest
+  ##
+  ## The dns resolver which is being used in the cluster (e.g., kube-dns, coredns)
+  dnsResolver: kube-dns
 ##
 ## Configure a pod disruption budget for the Event Store StatefulSet.
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -66,6 +69,9 @@ podDisruptionBudget:
   ##
   ## Number of pods that can be unavailable after eviction.
   # maxUnavailable: 1
+##
+## External IP Address. Remove or set to `null` to disable connections from outside the cluster.
+extIp: 0.0.0.0
 ##
 ## Internal HTTP port.
 intHttpPort: 2112
@@ -86,6 +92,13 @@ gossipAllowedDiffMs: 600000
 ## example:
 ##  EVENTSTORE_RUN_PROJECTIONS: System
 eventStoreConfig: {}
+
+##
+## Schedule a scavenging CronJob
+## ref: https://eventstore.org/docs/server/scavenging/
+scavenging:
+  enabled: false
+  schedule: 0 2 * * *
 
 ## Persist data to a persistent volume
 persistence:
@@ -121,6 +134,8 @@ resources: {}
   #  memory: 128Mi
 
 nodeSelector: {}
+
+podAnnotations: {}
 
 tolerations: []
 

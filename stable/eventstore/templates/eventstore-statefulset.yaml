@@ -20,6 +20,10 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "eventstore.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.podAnnotations }}
+      annotations:
+{{ toYaml .Values.podAnnotations | indent 8 }}
+      {{- end }}
     spec:      
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
@@ -46,6 +50,14 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             - name: EVENTSTORE_EXT_IP
+            {{- if .Values.extIp }}
+              value: {{ .Values.extIp }}
+            {{- else }}
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            {{- end }}
+            - name: EVENTSTORE_EXT_IP_ADVERTISE_AS
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP

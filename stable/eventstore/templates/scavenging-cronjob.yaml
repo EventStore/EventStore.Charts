@@ -1,0 +1,51 @@
+{{- if .Values.scavenging.enabled }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "eventstore.fullname" . }}-scavenging
+  labels:
+    app.kubernetes.io/name: {{ include "eventstore.name" . }}
+    helm.sh/chart: {{ include "eventstore.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  schedule: {{ .Values.scavenging.schedule }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          name: {{ include "eventstore.fullname" . }}-scavenge
+          labels:
+            app.kubernetes.io/name: {{ include "eventstore.name" . }}
+        spec:
+          serviceAccountName: {{ include "eventstore.fullname" . }}
+          restartPolicy: OnFailure
+          containers:
+            - name: eventstore-scavenge
+              image: "lachlanevenson/k8s-kubectl:latest"
+              env:
+              - name: ADMIN_PASSWORD
+                value: {{ quote .Values.admin.password }}
+              envFrom:
+                - configMapRef:
+                    name: {{ include "eventstore.fullname" . }}-env
+              volumeMounts:
+                - name: config
+                  mountPath: /usr/local/bin/es-scavenging
+                  subPath: es-scavenging
+                  readOnly: true
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 56Mi
+                limits:
+                  cpu: 200m
+                  memory: 128Mi
+              command: ["es-scavenging"]
+          volumes:
+            - name: config
+              configMap:
+                name: {{ include "eventstore.fullname" . }}-scavenging
+                defaultMode: 0744
+{{- end }}

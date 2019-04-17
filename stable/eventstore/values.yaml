@@ -27,7 +27,7 @@ imagePullPolicy: IfNotPresent
 ## Common values for the `clusterSize` setting are 3 or 5
 ## (to have a majority of 2 nodes and a majority of 3 nodes).
 ## ref: https://eventstore.org/docs/server/cluster-without-manager-nodes/index.html
-clusterSize: 3
+clusterSize: 1
 ##
 ## Configure the HTTP admin API. The admin password is set
 ## using a post-install hook that makes a POST request to the

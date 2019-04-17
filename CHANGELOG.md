@@ -1,5 +1,8 @@
 # Changelog 
 # 
+## 0.2.2: Apirl 17, 2019
+- Fix port-forward by only advertising address for multiple nodes
+
 ## 0.2.1: March 27, 2019
 - Make dns resolver configurable
  

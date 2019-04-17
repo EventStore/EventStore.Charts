@@ -57,10 +57,12 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             {{- end }}
+            {{- if and .Values.extIp (gt .Values.clusterSize 1.0) }}
             - name: EVENTSTORE_EXT_IP_ADVERTISE_AS
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            {{- end }}
           ports:
             - containerPort: {{ .Values.intTcpPort }}
             - containerPort: {{ .Values.extTcpPort }}

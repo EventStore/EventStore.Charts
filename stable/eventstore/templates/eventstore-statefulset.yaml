@@ -13,6 +13,7 @@ spec:
       app.kubernetes.io/name: {{ include "eventstore.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   replicas: {{ .Values.clusterSize }}
+  serviceName: {{ include "eventstore.fullname" . }}
   template:
     metadata:
       annotations:

@@ -1,8 +1,11 @@
 # Changelog 
 # 
+## 0.2.4: June 24, 2019
+- Set `spec.updateStrategy.type` to `RollingUpdate` in StatefulSet
+
 ## 0.2.3: May 24, 2019
 - Add serviceName to the eventstore statefulset
-- 
+ 
 ## 0.2.2: Apirl 17, 2019
 - Fix port-forward by only advertising address for multiple nodes
 

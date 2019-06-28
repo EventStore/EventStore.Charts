@@ -3,7 +3,7 @@ description: A Helm chart for Kubernetes EventStore.
 name: eventstore
 home: https://eventstore.org/
 version: 0.2.3
-appVersion: 4.1.1-hotfix1
+appVersion: release-5.0.1
 keywords:
   - eventstore
 sources:

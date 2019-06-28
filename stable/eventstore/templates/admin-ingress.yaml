@@ -1,0 +1,33 @@
+{{- if .Values.admin.ingress.enabled -}}
+{{- $serviceName := include "eventstore.fullname" . -}}
+{{- $servicePort := .Values.extHttpPort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/name: {{ include "eventstore.name" . }}
+    helm.sh/chart: {{ include "eventstore.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+  name: {{ template "eventstore.fullname" . }}
+  annotations:
+    {{- range $key, $value := .Values.admin.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+spec:
+  rules:
+    {{- range .Values.admin.ingress.hosts }}
+      {{- $url := splitList "/" . }}
+    - host: {{ first $url }}
+      http:
+        paths:
+          - path: /{{ rest $url | join "/" }}
+            backend:
+              serviceName: {{ $serviceName }}-admin
+              servicePort: {{ $servicePort }}
+    {{- end -}}
+  {{- if .Values.admin.ingress.tls }}
+  tls:
+{{ toYaml .Values.admin.ingress.tls | indent 4 }}
+  {{- end -}}
+{{- end -}}

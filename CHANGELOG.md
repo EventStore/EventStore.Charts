@@ -1,5 +1,8 @@
 # Changelog 
 # 
+## 0.3.0: June 18, 2019
+- Update eventstore docker version and add ingress templete
+
 ## 0.2.3: May 24, 2019
 - Add serviceName to the eventstore statefulset
 - 

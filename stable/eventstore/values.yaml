@@ -6,7 +6,7 @@
 image: eventstore/eventstore
 ##
 ## Event Store image tag
-imageTag: release-4.1.1-hotfix1
+imageTag: release-5.0.1
 ##
 ## Specify a imagePullPolicy
 ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
@@ -56,6 +56,22 @@ admin:
   ##
   ## The dns resolver which is being used in the cluster (e.g., kube-dns, coredns)
   dnsResolver: kube-dns
+
+  ingress:
+    enabled: false
+
+  ## hosts:
+  ##   - chart-example.local
+
+  ## annotations:
+  ##   kubernetes.io/ingress.class: "nginx"
+  ##   nginx.ingress.kubernetes.io/hsts: "false"
+
+  ## tls:
+  ##   - secretName: chart-example-tls
+  ##     hosts:
+  ##       - chart-example.local
+
 ##
 ## Configure a pod disruption budget for the Event Store StatefulSet.
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/

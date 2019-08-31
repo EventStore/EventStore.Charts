@@ -76,7 +76,7 @@ extIp: 0.0.0.0
 ## Internal HTTP port.
 intHttpPort: 2112
 ##
-## External HTTP port.
+## External HTTP port. If mapping to a custom domain name, you should set this to 80.
 extHttpPort: 2113
 ##
 ## Internal TCP port.
@@ -98,6 +98,7 @@ eventStoreConfig: {}
 ## ref: https://eventstore.org/docs/server/scavenging/
 scavenging:
   enabled: false
+  image: lachlanevenson/k8s-kubectl
   schedule: 0 2 * * *
 
 ## Persist data to a persistent volume

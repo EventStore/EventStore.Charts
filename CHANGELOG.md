@@ -1,5 +1,19 @@
 # Changelog 
 # 
+## 0.3.0: August 30, 2019
+- __Breaking__: Change the eventstore service to use the internal HTTP/TCP ports.
+- __Breaking__: Set `GOSSIP_ON_EXT` to 'False' so the admin UI will work with a cluster.
+- __Breaking__: Remove `EXT_IP_ADVERTISE_AS` from the StatefulSet as the
+clients should connect using the internal HTTP port.
+- __Potentially breaking__: Add release namespace to all resources to work with `helm template`
+See https://github.com/helm/helm/issues/5465 for more information.
+- Add `app.kubernetes.io/component` label to components to make
+selection easier.
+- Specify scavenging image in values.
+- Fix scavenging when admin password is not set.
+## 0.2.3: May 24, 2019
+- Add serviceName to the eventstore statefulset
+
 ## 0.2.2: Apirl 17, 2019
 - Fix port-forward by only advertising address for multiple nodes
 

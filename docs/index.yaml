@@ -3,15 +3,32 @@ entries:
   eventstore:
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.4307258-04:00
+    created: 2019-08-31T16:58:02.88057-04:00
     description: A Helm chart for Kubernetes EventStore.
-    digest: fedff3b38026a10f3fe9382f965ed663c6f7b4edc20c068bec197dd27272ad50
-=======
-    created: "2019-06-24T19:26:22.528786661+02:00"
+    digest: b7cc1229f1db8c65a0614a19f4129289f5319f3656f53837ed1602e3ae0a61dd
+    home: https://eventstore.org/
+    icon: https://eventstore.org/images/ouro-full.svg
+    keywords:
+    - eventstore
+    maintainers:
+    - email: ameier38@gmail.com
+      name: ameier38
+    - email: jhinds2010@gmail.com
+      name: jhinds
+    - email: riccardo@dinuzzo.it
+      name: riccardone
+    name: eventstore
+    sources:
+    - https://github.com/EventStore/eventstore-docker
+    - https://github.com/EventStore/EventStore
+    urls:
+    - https://eventstore.github.io/EventStore.Charts/eventstore-0.2.5.tgz
+    version: 0.2.5
+  - apiVersion: v1
+    appVersion: 4.1.1-hotfix1
+    created: 2019-08-31T16:58:02.879569-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: 68d0cca0734f9068f249e7be11d8a89ec88cda3bf04e9b27037a472c8fe3c305
->>>>>>> upstream/master
     home: https://eventstore.org/
     icon: https://eventstore.org/images/ouro-full.svg
     keywords:
@@ -32,11 +49,7 @@ entries:
     version: 0.2.4
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.4287373-04:00
-=======
-    created: "2019-06-24T19:26:22.528321974+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8785886-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: ad118ce22cf08b05416f8011ef36ec7919f76794f3eef54cd4fe9bb6e07f9f53
     home: https://eventstore.org/
@@ -59,11 +72,7 @@ entries:
     version: 0.2.3
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.4237594-04:00
-=======
-    created: "2019-06-24T19:26:22.527735099+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.877564-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: e27e825341c9372ce43ad11fc3066d55be8ec70b131d84b8cd2eb5a17e28b8d4
     home: https://eventstore.org/
@@ -86,11 +95,7 @@ entries:
     version: 0.2.2
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.4167505-04:00
-=======
-    created: "2019-06-24T19:26:22.524844874+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8765636-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: d2e5f592d2cc4278005f33d64ff0dd70c4d60982e3a27a3e0e6fce28fe7aac50
     home: https://eventstore.org/
@@ -113,11 +118,7 @@ entries:
     version: 0.2.1
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.4097595-04:00
-=======
-    created: "2019-06-24T19:26:22.523543612+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8755627-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: c52383cc1c4647b8b11a11f1203dbad6ae558b0ca1afc8e94899fc9eac3d716f
     home: https://eventstore.org/
@@ -140,11 +141,7 @@ entries:
     version: 0.2.0
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.4047567-04:00
-=======
-    created: "2019-06-24T19:26:22.522730747+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8755627-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: cba0d053c15705dc6e56ab3421825fab67a1926580651cf9e16df4639c7d2aeb
     home: https://eventstore.org/
@@ -167,11 +164,7 @@ entries:
     version: 0.1.5
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.3987593-04:00
-=======
-    created: "2019-06-24T19:26:22.521406969+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8745328-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: 0c55e844c4b1095f7330067fb35fce2577f633a2f3335b93f7bc93b362d840b7
     home: https://eventstore.org/
@@ -194,11 +187,7 @@ entries:
     version: 0.1.4
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.3927251-04:00
-=======
-    created: "2019-06-24T19:26:22.52076032+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8735357-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: 78cf6ea79b5edbc77163c2261b5105a11712f49acbd5b4151fdbd32a5faf3354
     home: https://eventstore.org/
@@ -221,11 +210,7 @@ entries:
     version: 0.1.3
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.3877566-04:00
-=======
-    created: "2019-06-24T19:26:22.520217589+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8725352-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: 1f1c300846d608d990ea03d992b6c8169a8a62ae48bc39e7e4688b09d6d868b4
     home: https://eventstore.org/
@@ -248,11 +233,7 @@ entries:
     version: 0.1.2
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.3827235-04:00
-=======
-    created: "2019-06-24T19:26:22.519634288+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8715685-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: b328c5794fd7a7c8f1f802144d4c351e09242d1107e25ea1dd840bf7ab8ad102
     home: https://eventstore.org/
@@ -275,11 +256,7 @@ entries:
     version: 0.1.1
   - apiVersion: v1
     appVersion: 4.1.1-hotfix1
-<<<<<<< HEAD
-    created: 2019-08-31T16:39:17.3777238-04:00
-=======
-    created: "2019-06-24T19:26:22.51905065+02:00"
->>>>>>> upstream/master
+    created: 2019-08-31T16:58:02.8705681-04:00
     description: A Helm chart for Kubernetes EventStore.
     digest: 8b4974e422069914c1fe4a8203bca4947a1ebe91c8978c0ed4857be811eb7cad
     home: https://eventstore.org/
@@ -300,8 +277,4 @@ entries:
     urls:
     - https://eventstore.github.io/EventStore.Charts/eventstore-0.1.0.tgz
     version: 0.1.0
-<<<<<<< HEAD
-generated: 2019-08-31T16:39:17.3717567-04:00
-=======
-generated: "2019-06-24T19:26:22.518056623+02:00"
->>>>>>> upstream/master
+generated: 2019-08-31T16:58:02.8695699-04:00

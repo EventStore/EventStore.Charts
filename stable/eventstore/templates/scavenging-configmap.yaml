@@ -30,7 +30,7 @@ data:
             -d {} \
             -X POST \
             -u 'admin:{{ .Values.admin.password | default "changeit" }}' \
-            "http://localhost:{{ .Values.intHttpPort }}/admin/scavenge"
+            "http://localhost:{{ .Values.extHttpPort }}/admin/scavenge"
       done
 
       echo "[`date`] Instructed all nodes to scavenge"

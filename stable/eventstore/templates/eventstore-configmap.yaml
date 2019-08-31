@@ -22,9 +22,6 @@ data:
   EVENTSTORE_CLUSTER_SIZE: {{ quote .Values.clusterSize }}
   ## DNS name from which other nodes can be discovered. 
   EVENTSTORE_CLUSTER_DNS: {{ include "eventstore.dns" . }}
-  ## Whether or not to accept gossip requests on the external HTTP endpoint.
-  ## Gossip is disabled so the external IP address can be bound to 0.0.0.0.
-  EVENTSTORE_GOSSIP_ON_EXT: "False"
   ## Port on which nodes should gossip
   EVENTSTORE_CLUSTER_GOSSIP_PORT: {{ quote .Values.intHttpPort }}
   ## The amount of drift, in ms, between clocks on nodes allowed before gossip is rejected.

@@ -7,17 +7,17 @@ The Event Store is installed!
 
 You can access Event Store:
 
-  * Within your cluster, use the following URI:
+  * Within your cluster, using the following URI:
 
     {{ if gt .Values.clusterSize 1.0 }}
-    discover://{{ include "eventstore.dns" . }}:{{ .Values.intHttpPort }}
+    discover://{{ include "eventstore.dns" . }}:{{ .Values.extHttpPort }}
     {{ else }}
-    tcp://{{ include "eventstore.dns" . }}:{{ .Values.intTcpPort }}
+    tcp://{{ include "eventstore.dns" . }}:{{ .Values.extTcpPort }}
     {{ end }}
-    Note that the interface uses the internal port.
 
     ref: https://eventstore.org/docs/dotnet-api/connecting-to-a-server/index.html#uris
 
+{{- if gt .Values.clusterSize 1.0 }}
 You can access the Event Store admin interface:
   * From outside the cluster:
     {{- if contains "NodePort" .Values.admin.serviceType }}
@@ -41,3 +41,4 @@ You can access the Event Store admin interface:
 
     The default username and password is admin:changeit
     {{- end }}
+{{- end }}

@@ -25,7 +25,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: eventstore-scavenge
-              image: {{ quote .Values.scavenging.image }}
+              image: "{{ .Values.scavenging.image }}:{{ .Values.scavenging.imageTag }}"
               volumeMounts:
                 - name: config
                   mountPath: /usr/local/bin/es-scavenging

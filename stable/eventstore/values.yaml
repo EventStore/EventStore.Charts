@@ -99,6 +99,7 @@ eventStoreConfig: {}
 scavenging:
   enabled: false
   image: lachlanevenson/k8s-kubectl
+  imageTag: latest
   schedule: 0 2 * * *
 
 ## Persist data to a persistent volume

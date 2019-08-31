@@ -84,6 +84,7 @@ The following table lists the configurable parameters of the Event Store chart a
 | `podDisruptionBudget.enabled`        | Enable a pod disruption budget for nodes                                      | `false`                      |
 | `podDisruptionBudget.minAvailable`   | Number of pods that must still be available after eviction                    | `2`                          |
 | `podDisruptionBudget.maxUnavailable` | Number of pods that can be unavailable after eviction                         | `nil`                        |
+| `extIp`                              | External IP address                                                           | `0.0.0.0`                    |
 | `intHttpPort`                        | Internal HTTP port                                                            | `2112`                       |
 | `extHttpPort`                        | External HTTP port                                                            | `2113`                       |
 | `intTcpPort`                         | Internal TCP port                                                             | `1112`                       |
@@ -91,6 +92,8 @@ The following table lists the configurable parameters of the Event Store chart a
 | `gossipAllowedDiffMs`                | The amount of drift, in ms, between clocks on nodes before gossip is rejected | `600000`                     |
 | `eventStoreConfig`                   | Additional Event Store parameters                                             | `{}`                         |
 | `scavenging.enabled`                 | Enable the scavenging CronJob for all nodes                                   | `false`                      |
+| `scavenging.image`                   | The image to use for the scavenging CronJob                                   | `lachlanevenson/k8s-kubectl` |
+| `scavenging.imageTag`                | The image tag use for the scavenging CronJob                                  | `latest`                     |
 | `scavenging.schedule`                | The schedule to use for the scavenging CronJob                                | `0 2 * * *`                  |
 | `persistence.enabled`                | Enable persistence using PVC                                                  | `false`                      |
 | `persistence.existingClaim`          | Provide an existing PVC                                                       | `nil`                        |
@@ -171,7 +174,7 @@ allowVolumeExpansion: true
 ### __Option 2__: Resize PVC created without volume expansion enabled
 This process is a bit involved but also a good exercise for backing up the database. We will
 use AWS S3 as the storage backend but the process works just as well for other backends such as GCS.
-1. Connect to the StatefulSet pod.
+1. Connect to one of the StatefulSet pods.
     ```shell
     kubectl exec -it eventstore-0 sh
     ```
@@ -206,19 +209,30 @@ use AWS S3 as the storage backend but the process works just as well for other b
     ```shell
     aws s3 cp --recursive /var/lib/eventstore/ s3://<bucket>/backup/eventstore/20190830/
     ```
-8. Create a new cluster with the new volume size. It is recommended to set `allowVolumeExpansion: true` 
-on your cluster's StorageClass prior to creating the cluster. This will make it easier to resize in the future. 
+    > ref: https://eventstore.org/docs/server/database-backup/#backing-up-a-database
+8. Create a new Event Store cluster with the new volume size. It is recommended to set `allowVolumeExpansion: true` 
+on your cluster's StorageClass prior to creating the cluster. This will make it easier to resize in the future by
+following the steps in Option 1 above.
 See [the documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#expanding-persistent-volumes-claims)
 for more details.
 9. Repeat steps (1) through (5) on the new cluster StatefulSet pod.
 10. Copy the backup files from S3.
     ```shell
-    aws s3 cp --recursive --exclude="truncate.chk" s3://<bucket>/backup/eventstore/20190830 /var/lib/eventstore
     aws s3 cp s3://<bucket>/backup/eventstore/20190830/chaser.chk /var/lib/eventstore/truncate.chk
+    aws s3 cp --recursive --exclude="truncate.chk" s3://<bucket>/backup/eventstore/20190830 /var/lib/eventstore
     ```
+    > ref: https://eventstore.org/docs/server/database-backup/#restoring-a-database
 11. Restart the StatefulSet pods.
     ```shell
-    kubectl delete pod -l app.kubernetes.io/component=database,app.kubernetes.io/instance=eventstore
+    kubectl delete $(kubectl get pod -o name -l app.kubernetes.io/component=database,app.kubernetes.io/instance=eventstore)
+    ```
+12. Check the logs to ensure Event Store is processing the chunks.
+    ```
+    kubectl logs -f eventstore-0
+    ...
+    [00001,12,11:16:47.264] CACHED TFChunk #1-1 (chunk-000001.000000) in 00:00:00.0000495.
+    [00001,12,11:17:07.681] Completing data chunk 1-1...
+    ...
     ```
 
 ## Additional Resources

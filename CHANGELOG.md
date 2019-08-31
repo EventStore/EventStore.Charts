@@ -1,6 +1,6 @@
 # Changelog 
 # 
-## 0.2.4: August 30, 2019
+## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.
 - Add `app.kubernetes.io/component` label to components to make
@@ -9,9 +9,13 @@ selection easier.
 - Fix scavenging when admin password is not set.
 - Fix persistent volume on StatefulSet for existing claim.
 - Add documentation on how to resize the PVC.
+
+## 0.2.4: June 24, 2019
+- Set `spec.updateStrategy.type` to `RollingUpdate` in StatefulSet
+
 ## 0.2.3: May 24, 2019
 - Add serviceName to the eventstore statefulset
-
+ 
 ## 0.2.2: Apirl 17, 2019
 - Fix port-forward by only advertising address for multiple nodes
 

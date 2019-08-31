@@ -18,3 +18,4 @@ spec:
     - name: http
       protocol: TCP
       port: {{ .Values.extHttpPort }}
+      targetPort: {{ .Values.extHttpPort }}

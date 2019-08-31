@@ -1,4 +1,4 @@
-The Event Store is installed!
+Event Store is installed!
  _____                 _     ____  _
 | ____|_   _____ _ __ | |_  / ___|| |_ ___  _ __ ___
 |  _| \ \ / / _ \ '_ \| __| \___ \| __/ _ \| '__/ _ \

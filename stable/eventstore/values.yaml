@@ -76,7 +76,7 @@ extIp: 0.0.0.0
 ## Internal HTTP port.
 intHttpPort: 2112
 ##
-## External HTTP port. If mapping to a custom domain name, you should set this to 80.
+## External HTTP port.
 extHttpPort: 2113
 ##
 ## Internal TCP port.

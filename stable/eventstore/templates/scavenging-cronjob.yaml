@@ -3,11 +3,13 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: {{ include "eventstore.fullname" . }}-scavenging
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "eventstore.name" . }}
     helm.sh/chart: {{ include "eventstore.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: scavenging
 spec:
   schedule: {{ .Values.scavenging.schedule }}
   concurrencyPolicy: Forbid
@@ -23,13 +25,7 @@ spec:
           restartPolicy: OnFailure
           containers:
             - name: eventstore-scavenge
-              image: "lachlanevenson/k8s-kubectl:latest"
-              env:
-              - name: ADMIN_PASSWORD
-                value: {{ quote .Values.admin.password }}
-              envFrom:
-                - configMapRef:
-                    name: {{ include "eventstore.fullname" . }}-env
+              image: "{{ .Values.scavenging.image }}:{{ .Values.scavenging.imageTag }}"
               volumeMounts:
                 - name: config
                   mountPath: /usr/local/bin/es-scavenging

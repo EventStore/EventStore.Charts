@@ -3,11 +3,13 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "eventstore.fullname" . }}-scavenging
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "eventstore.name" . }}
     helm.sh/chart: {{ include "eventstore.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: scavenging
 data:
   es-scavenging: |-
     #!/usr/bin/env sh
@@ -22,7 +24,13 @@ data:
     else
       for podname in $pods; do
         echo "[`date`] Instructing node ${podname##pod/} to scavenge"
-        kubectl exec ${podname##pod/} -- curl -si -d {} -X POST "http://localhost:${EVENTSTORE_INT_HTTP_PORT}/admin/scavenge" -u "admin:${ADMIN_PASSWORD}"
+        kubectl exec ${podname##pod/} -- \
+          curl \
+            -si \
+            -d {} \
+            -X POST \
+            -u 'admin:{{ .Values.admin.password | default "changeit" }}' \
+            "http://localhost:{{ .Values.intHttpPort }}/admin/scavenge"
       done
 
       echo "[`date`] Instructed all nodes to scavenge"

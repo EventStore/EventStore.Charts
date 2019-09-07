@@ -2,11 +2,13 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ include "eventstore.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "eventstore.name" . }}
     helm.sh/chart: {{ include "eventstore.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/component: database
 spec:
   selector:
     matchLabels:
@@ -23,6 +25,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "eventstore.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: database
       {{- if .Values.podAnnotations }}
       annotations:
 {{ toYaml .Values.podAnnotations | indent 8 }}
@@ -60,12 +63,12 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             {{- end }}
-            {{- if and .Values.extIp (gt .Values.clusterSize 1.0) }}
+          {{- if and .Values.extIp (gt .Values.clusterSize 1.0) }}
             - name: EVENTSTORE_EXT_IP_ADVERTISE_AS
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-            {{- end }}
+          {{- end }}
           ports:
             - containerPort: {{ .Values.intTcpPort }}
             - containerPort: {{ .Values.extTcpPort }}
@@ -90,15 +93,25 @@ spec:
           volumeMounts:
             - name: data
               mountPath: {{ .Values.persistence.mountPath }}
-      {{- if not .Values.persistence.enabled }}
       volumes:
+      {{- if (not .Values.persistence.enabled) }}
         - name: data
           emptyDir: {}
+      {{- else if .Values.persistence.existingClaim }}
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
       {{- end }}
-{{- if .Values.persistence.enabled }}
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
   volumeClaimTemplates:
     - metadata:
         name: data
+        namespace: {{ .Release.Namespace | quote }}
+        labels:
+          app.kubernetes.io/name: {{ include "eventstore.name" . }}
+          helm.sh/chart: {{ include "eventstore.chart" . }}
+          app.kubernetes.io/instance: {{ .Release.Name }}
+          app.kubernetes.io/managed-by: {{ .Release.Service }}
       {{- with .Values.persistence.annotations }}
         annotations:
         {{- range $key, $value := . }}

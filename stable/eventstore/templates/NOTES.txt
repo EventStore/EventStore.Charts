@@ -1,4 +1,4 @@
-The Event Store cluster is installed!
+Event Store is installed!
  _____                 _     ____  _
 | ____|_   _____ _ __ | |_  / ___|| |_ ___  _ __ ___
 |  _| \ \ / / _ \ '_ \| __| \___ \| __/ _ \| '__/ _ \
@@ -7,7 +7,7 @@ The Event Store cluster is installed!
 
 You can access Event Store:
 
-  * Within your cluster, use the following URI:
+  * Within your cluster, using the following URI:
 
     {{ if gt .Values.clusterSize 1.0 }}
     discover://{{ include "eventstore.dns" . }}:{{ .Values.extHttpPort }}
@@ -17,28 +17,7 @@ You can access Event Store:
 
     ref: https://eventstore.org/docs/dotnet-api/connecting-to-a-server/index.html#uris
 
-  * From outside the cluster:
-
-    {{ if gt .Values.clusterSize 1.0 }}
-    Because of how the gossip works for multiple nodes, you will need to use a tool like
-    telepresence (https://www.telepresence.io/) in order to connect to Event Store locally.
-    For example, start a shell using telepresence (if you are running Windows also add '--method=inject-tcp'):
-
-    telepresence --run-shell
-
-    Then connect to the cluster using the DNS names from above:
-
-    discover://{{ include "eventstore.dns" . }}:{{ .Values.extHttpPort }}
-    {{ else }}
-    First, forward the port locally:
-
-    kubectl port-forward svc/{{ include "eventstore.fullname" . }} {{ .Values.extTcpPort }}
-
-    Then connect using the following URI:
-
-    tcp://localhost:{{ .Values.extTcpPort }}
-    {{ end }}
-
+{{- if gt .Values.clusterSize 1.0 }}
 You can access the Event Store admin interface:
   * From outside the cluster:
     {{- if contains "NodePort" .Values.admin.serviceType }}
@@ -62,3 +41,4 @@ You can access the Event Store admin interface:
 
     The default username and password is admin:changeit
     {{- end }}
+{{- end }}

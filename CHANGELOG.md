@@ -1,5 +1,9 @@
 # Changelog 
 # 
+## 0.2.6: September 7, 2019
+- Add `admin.hostname` value to handle redirect of root admin endpoint.
+- Add config map checksums to deployment and stateful set to trigger rollout on change.
+
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

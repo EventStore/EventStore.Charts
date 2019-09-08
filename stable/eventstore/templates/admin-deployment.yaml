@@ -21,8 +21,9 @@ spec:
         app.kubernetes.io/name: {{ include "eventstore.name" . }}-admin
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: admin
-      {{- if .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/admin-configmap.yaml") . | sha256sum }}
+      {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
       {{- end }}
     spec:

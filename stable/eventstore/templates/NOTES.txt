@@ -15,6 +15,8 @@ You can access Event Store:
     tcp://{{ include "eventstore.dns" . }}:{{ .Values.extTcpPort }}
     {{ end }}
 
+    ref: https://eventstore.org/docs/dotnet-api/connecting-to-a-server/index.html#uris
+
 You can access the Event Store admin interface:
   * From outside the cluster:
     {{- if contains "NodePort" .Values.admin.serviceType }}

@@ -1,5 +1,7 @@
 # Changelog 
 # 
+## 0.2.6: October 22, 2019
+- Explicitly cast `clusterSize` to fix type comparison in `helm` `2.15.0`
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

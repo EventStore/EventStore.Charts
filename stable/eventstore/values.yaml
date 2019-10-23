@@ -124,6 +124,11 @@ persistence:
   mountPath: /var/lib/eventstore
   annotations: {}
 
+## Export prometheus metrics
+metrics:
+  enabled: false
+  port: 9448
+
 resources: {}
   ## If you want to specify resources, uncomment the following
   ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.

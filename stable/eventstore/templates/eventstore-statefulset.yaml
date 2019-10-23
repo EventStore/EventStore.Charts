@@ -22,14 +22,17 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/eventstore-configmap.yaml") . | sha256sum }}
+      {{- if .Values.metrics.enabled }}
+        prometheus.io/scrape: "true"
+        prometheus.io/port: {{ .Values.metrics.port | quote }}
+      {{- end }}
+      {{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
+      {{- end }}
       labels:
         app.kubernetes.io/name: {{ include "eventstore.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: database
-      {{- if .Values.podAnnotations }}
-      annotations:
-{{ toYaml .Values.podAnnotations | indent 8 }}
-      {{- end }}
     spec:      
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
@@ -44,6 +47,20 @@ spec:
       {{- end}}
       {{- end }}
       containers:
+      {{- if .Values.metrics.enabled }}
+        - name: prometheus-exporter
+          image: marcinbudny/eventstore_exporter:0.7.0
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - name: EVENTSTORE_USER
+              value: admin
+            - name: EVENTSTORE_PASSWORD
+              value: {{- if .Values.admin.password }} {{- .Values.admin.password }} {{- else }} changeit {{- end }}
+            - name: PORT
+              value: {{ .Values.metrics.port | quote }}
+            - name: CLUSTER_MODE
+              value: {{- if and .Values.extIp (gt (.Values.clusterSize | float64) 1.0) }} cluster {{- else }} single {{- end }}
+      {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}

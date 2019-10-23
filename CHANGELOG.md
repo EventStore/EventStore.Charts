@@ -1,5 +1,8 @@
 # Changelog 
 # 
+## 0.2.6 October 22, 2019
+- Add a prometheus exporter sidecar
+
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

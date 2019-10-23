@@ -127,6 +127,7 @@ persistence:
 ## Export prometheus metrics
 metrics:
   enabled: false
+  ## The port the exporter sidecar will expose its metrics on
   port: 9448
 
 resources: {}

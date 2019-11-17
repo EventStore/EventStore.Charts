@@ -127,8 +127,13 @@ persistence:
 ## Export prometheus metrics
 metrics:
   enabled: false
-  ## The port the exporter sidecar will expose its metrics on
+  image:
+    registry: docker.io
+    repository: marcinbudny/eventstore_exporter
+    tag: 0.7.0
+  ## The port on which the exporter sidecar will expose its metrics
   port: 9448
+  resources: {}
 
 resources: {}
   ## If you want to specify resources, uncomment the following

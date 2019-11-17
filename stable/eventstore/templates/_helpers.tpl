@@ -37,3 +37,10 @@ Create DNS used to access the service from within the cluster.
 {{- define "eventstore.dns" -}}
 {{ include "eventstore.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
 {{- end -}}
+
+{{- define "eventstore.metrics.image" -}}
+{{- $registryName :=  default "docker.io" .Values.metrics.image.registry -}}
+{{- $repositoryName := .Values.metrics.image.repository -}}
+{{- $tag := default "latest" .Values.metrics.image.tag | toString -}}
+{{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
+{{- end -}}

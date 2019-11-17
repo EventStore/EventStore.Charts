@@ -49,7 +49,7 @@ spec:
       containers:
       {{- if .Values.metrics.enabled }}
         - name: prometheus-exporter
-          image: marcinbudny/eventstore_exporter:0.7.0
+          image: {{ template "eventstore.metrics.image" . }}
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
             - name: EVENTSTORE_USER
@@ -60,6 +60,12 @@ spec:
               value: {{ .Values.metrics.port | quote }}
             - name: CLUSTER_MODE
               value: {{- if and .Values.extIp (gt (.Values.clusterSize | float64) 1.0) }} cluster {{- else }} single {{- end }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+          {{- if .Values.metrics.resources }}
+          resources: {{- toYaml .Values.metrics.resources | nindent 12 -}}
+          {{- end }}
       {{- end }}
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image }}:{{ .Values.imageTag }}"
@@ -105,8 +111,9 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 5
             periodSeconds: 15
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
+          {{- if .Values.resources }}
+          resources: {{- toYaml .Values.resources | nindent 12 -}}
+          {{- end }}
           volumeMounts:
             - name: data
               mountPath: {{ .Values.persistence.mountPath }}

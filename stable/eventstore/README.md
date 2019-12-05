@@ -107,9 +107,8 @@ The following table lists the configurable parameters of the Event Store chart a
 | `tolerations`                        | Toleration labels for pod assignment                                          | `[]`                              |
 | `affinity`                           | Affinity settings for pod assignment                                          | `{}`                              |
 | `metrics.enabled`                    | Enable a sidecar to export prometheus metrics                                 | `false`                           |
-| `metrics.image.registry`             | Docker registry from which to pull the metrics image                          | `docker.io`                       |
-| `metrics.image.repository`           | Docker repository from which to pull the metrics image                        | `marcinbudny/eventstore_exporter` |
-| `metrics.image.tag`                  | Metric exporter image tag to pull                                             | `0.7.0`                           |
+| `metrics.image`                      | Docker repository from which to pull the metrics exporter image               | `marcinbudny/eventstore_exporter` |
+| `metrics.imageTag`                   | Metrics exporter image tag to pull                                            | `0.7.0`                           |
 | `metrics.port`                       | Metrics exporter port                                                         | `9448`                            |
 | `metrics.resources`                  | CPU/Memory resource requests/limits for the metrics exporter                  | `{}`                              |
 

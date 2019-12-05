@@ -49,7 +49,7 @@ spec:
       containers:
       {{- if .Values.metrics.enabled }}
         - name: prometheus-exporter
-          image: {{ template "eventstore.metrics.image" . }}
+          image: "{{ .Values.metrics.image }}:{{ .Values.metrics.imageTag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
             - name: EVENTSTORE_USER

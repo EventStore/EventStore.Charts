@@ -31,7 +31,7 @@ main() {
     configure_kubectl "$testcontainer_id"
     
     # --- Work around for Tillerless Helm, till Helm v3 gets released --- #
-    run_tillerless
+    #run_tillerless
     # ---------- #
 
     run_test
@@ -92,10 +92,10 @@ run_test() {
 
     # --- Work around for Tillerless Helm, till Helm v3 gets released --- #
     # shellcheck disable=SC2086
-    docker exec -e HELM_HOST=127.0.0.1:44134 -e HELM_TILLER_SILENT=true "$testcontainer_id" ct install ${CHART_TESTING_ARGS} --config /workdir/test/ct.yaml
+    #docker exec -e HELM_HOST=127.0.0.1:44134 -e HELM_TILLER_SILENT=true "$testcontainer_id" ct install ${CHART_TESTING_ARGS} --config /workdir/test/ct.yaml
     # ------------------------------------------------------------------- #
 
-    ##### docker exec "$testcontainer_id" ct install ${CHART_TESTING_ARGS} --config /workdir/test/ct.yaml
+    docker exec "$testcontainer_id" ct install ${CHART_TESTING_ARGS} --config /workdir/test/ct.yaml
 
     echo "Done Testing!"
 }

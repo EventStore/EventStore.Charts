@@ -3,4 +3,4 @@ target-branch: master
 charts:
   - stable/eventstore
 excluded-charts: []
-helm-extra-args: --timeout 4000
+helm-extra-args: --timeout 4000s

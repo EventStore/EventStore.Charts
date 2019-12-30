@@ -9,7 +9,7 @@ You can access Event Store:
 
   * Within your cluster, using the following URI:
 
-    {{ if gt .Values.clusterSize 1.0 }}
+    {{ if gt .Values.clusterSize 1 }}
     discover://{{ include "eventstore.dns" . }}:{{ .Values.extHttpPort }}
     {{ else }}
     tcp://{{ include "eventstore.dns" . }}:{{ .Values.extTcpPort }}
@@ -17,7 +17,7 @@ You can access Event Store:
 
     ref: https://eventstore.org/docs/dotnet-api/connecting-to-a-server/index.html#uris
 
-{{- if gt .Values.clusterSize 1.0 }}
+{{- if gt .Values.clusterSize 1 }}
 You can access the Event Store admin interface:
   * From outside the cluster:
     {{- if contains "NodePort" .Values.admin.serviceType }}

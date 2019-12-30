@@ -63,7 +63,7 @@ spec:
                 fieldRef:
                   fieldPath: status.podIP
             {{- end }}
-          {{- if and .Values.extIp (gt .Values.clusterSize 1.0) }}
+          {{- if and .Values.extIp (gt .Values.clusterSize 1) }}
             - name: EVENTSTORE_EXT_IP_ADVERTISE_AS
               valueFrom:
                 fieldRef:

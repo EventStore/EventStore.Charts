@@ -1,5 +1,8 @@
 # Changelog 
 # 
+## 0.2.6: January 1, 2020
+- Add nodeselector, affinity and tolerations to admin deployment
+
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

@@ -56,6 +56,12 @@ admin:
   ##
   ## The dns resolver which is being used in the cluster (e.g., kube-dns, coredns)
   dnsResolver: kube-dns
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
 ##
 ## Configure a pod disruption budget for the Event Store StatefulSet.
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/

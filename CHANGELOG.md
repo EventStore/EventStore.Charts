@@ -1,5 +1,8 @@
-# Changelog 
-# 
+# Changelog
+#
+## 0.2.6: March 4, 2020
+- Fixed post install ConfigMap script - check for 401 status code instead of 200 for eventstore to be up.
+
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

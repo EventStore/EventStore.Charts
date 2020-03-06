@@ -1,5 +1,7 @@
 > **After reviewing our strategy in regards to deployment of Event Store on Kubernetes, we have decided to deprecate the Helm chart. While we believe that Helm charts are a great solution for deploying simple applications, we do not believe that they provide the comprehensive life-cycle management features that a distributed database like Event Store requires for real world operational use. As such we will be devoting resources to develop a Kubernetes operator that satisfies these requirements, for release at a future date.**
 
+> **For more information see [this](https://eventstore.com/blog/event-store-on-kubernetes/) blog post.**
+
 # Event Store Helm Charts
 This repository hosts the official Event Store Helm charts.
 

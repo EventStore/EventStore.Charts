@@ -20,14 +20,13 @@ spec:
   serviceName: {{ include "eventstore.fullname" . }}
   template:
     metadata:
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/eventstore-configmap.yaml") . | sha256sum }}
       labels:
         app.kubernetes.io/name: {{ include "eventstore.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: database
-      {{- if .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/eventstore-configmap.yaml") . | sha256sum }}
+      {{- if .Values.podAnnotations }}
 {{ toYaml .Values.podAnnotations | indent 8 }}
       {{- end }}
     spec:      

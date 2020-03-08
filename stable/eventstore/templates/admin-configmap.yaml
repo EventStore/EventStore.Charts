@@ -28,5 +28,6 @@ data:
             proxy_set_header    X-Real-IP $remote_addr;
             proxy_set_header    Host      $http_host;
             proxy_pass          $eventstore;
+            proxy_redirect ~^http://[^/]+?/web/(.+)$ http://{{ .Values.admin.hostname }}:{{ .Values.extHttpPort }}/web/$1;
         }
     }

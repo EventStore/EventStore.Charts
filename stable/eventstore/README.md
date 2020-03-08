@@ -75,6 +75,7 @@ The following table lists the configurable parameters of the Event Store chart a
 | `imagePullPolicy`                    | Container pull policy                                                         | `IfNotPresent`               |
 | `imagePullSecrets`                   | Specify image pull secrets                                                    | `nil`                        |
 | `clusterSize`                        | The number of nodes in the cluster                                            | `3`                          |
+| `admin.hostname`                     | Hostname of server running the admin interface                                | `localhost`                  |
 | `admin.jobImage`                     | Post install Job image with `curl` installed for setting admin password       | `tutum/curl`                 |
 | `admin.jobImageTag`                  | Post install Job image tag                                                    | `latest`                     |
 | `admin.password`                     | Custom password for admin interface (should be set in separate file)          | `nil`                        |

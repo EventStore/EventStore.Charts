@@ -15,7 +15,7 @@ data:
     set -e
     endpoint="http://{{ include "eventstore.dns" . }}:{{ .Values.extHttpPort }}"
     # wait until the admin user is available
-    while [[ "$(curl -s -o /dev/null -w '%{http_code}' $endpoint/users/admin)" != "200" ]]; do 
+    while [[ "$(curl -s -o /dev/null -w '%{http_code}' $endpoint/users/admin)" != "401" ]]; do
     echo "waiting for Event Store at $endpoint..."
     sleep 5
     done

@@ -1,5 +1,8 @@
-# Changelog 
-# 
+# Changelog
+#
+## 0.2.6: March 4, 2020
+- Fixed post install ConfigMap script - verify eventstore is up before sending admin password update request by checking response http code as 401 instead of 200 since we are not supplying auth credentials to the http request.
+
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

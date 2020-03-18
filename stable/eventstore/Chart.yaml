@@ -2,7 +2,7 @@ apiVersion: v1
 description: A Helm chart for Kubernetes EventStore.
 name: eventstore
 home: https://eventstore.org/
-version: 0.2.5
+version: 0.2.6
 appVersion: 4.1.1-hotfix1
 keywords:
   - eventstore

@@ -124,6 +124,15 @@ persistence:
   mountPath: /var/lib/eventstore
   annotations: {}
 
+## Export prometheus metrics
+metrics:
+  enabled: false
+  image: marcinbudny/eventstore_exporter
+  imageTag: 0.7.0
+  ## The port on which the exporter sidecar will expose its metrics
+  port: 9448
+  resources: {}
+
 resources: {}
   ## If you want to specify resources, uncomment the following
   ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.

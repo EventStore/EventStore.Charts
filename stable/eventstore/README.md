@@ -68,44 +68,50 @@ associated with the chart and deletes the release.
 
 The following table lists the configurable parameters of the Event Store chart and their default values.
 
-| Parameter                            | Description                                                                   | Default                      |
-| ------------------------------------ | ----------------------------------------------------------------------------- | ---------------------------- |
-| `image`                              | Container image name                                                          | `eventstore/eventstore`      |
-| `imageTag`                           | Container image tag                                                           | `release-4.1.1-hotfix1`      |
-| `imagePullPolicy`                    | Container pull policy                                                         | `IfNotPresent`               |
-| `imagePullSecrets`                   | Specify image pull secrets                                                    | `nil`                        |
-| `clusterSize`                        | The number of nodes in the cluster                                            | `3`                          |
-| `admin.jobImage`                     | Post install Job image with `curl` installed for setting admin password       | `tutum/curl`                 |
-| `admin.jobImageTag`                  | Post install Job image tag                                                    | `latest`                     |
-| `admin.password`                     | Custom password for admin interface (should be set in separate file)          | `nil`                        |
-| `admin.serviceType`                  | Service type for the admin interface                                          | `ClusterIP`                  |
-| `admin.proxyImage`                   | NGINX image for admin interface proxy                                         | `nginx`                      |
-| `admin.proxyImageTag`                | NGINX image tag                                                               | `latest`                     |
-| `podDisruptionBudget.enabled`        | Enable a pod disruption budget for nodes                                      | `false`                      |
-| `podDisruptionBudget.minAvailable`   | Number of pods that must still be available after eviction                    | `2`                          |
-| `podDisruptionBudget.maxUnavailable` | Number of pods that can be unavailable after eviction                         | `nil`                        |
-| `extIp`                              | External IP address                                                           | `0.0.0.0`                    |
-| `intHttpPort`                        | Internal HTTP port                                                            | `2112`                       |
-| `extHttpPort`                        | External HTTP port                                                            | `2113`                       |
-| `intTcpPort`                         | Internal TCP port                                                             | `1112`                       |
-| `extTcpPort`                         | External TCP port                                                             | `1113`                       |
-| `gossipAllowedDiffMs`                | The amount of drift, in ms, between clocks on nodes before gossip is rejected | `600000`                     |
-| `eventStoreConfig`                   | Additional Event Store parameters                                             | `{}`                         |
-| `scavenging.enabled`                 | Enable the scavenging CronJob for all nodes                                   | `false`                      |
-| `scavenging.image`                   | The image to use for the scavenging CronJob                                   | `lachlanevenson/k8s-kubectl` |
-| `scavenging.imageTag`                | The image tag use for the scavenging CronJob                                  | `latest`                     |
-| `scavenging.schedule`                | The schedule to use for the scavenging CronJob                                | `0 2 * * *`                  |
-| `persistence.enabled`                | Enable persistence using PVC                                                  | `false`                      |
-| `persistence.existingClaim`          | Provide an existing PVC                                                       | `nil`                        |
-| `persistence.accessMode`             | Access Mode for PVC                                                           | `ReadWriteOnce`              |
-| `persistence.size`                   | Size of data volume                                                           | `8Gi`                        |
-| `persistence.mountPath`              | Mount path of data volume                                                     | `/var/lib/eventstore`        |
-| `persistence.annotations`            | Annotations for PVC                                                           | `{}`                         |
-| `resources`                          | CPU/Memory resource request/limits                                            | Memory: `256Mi`, CPU: `100m` |
-| `nodeSelector`                       | Node labels for pod assignment                                                | `{}`                         |
-| `podAnnotations`                     | Pod annotations                                                               | `{}`                         |
-| `tolerations`                        | Toleration labels for pod assignment                                          | `[]`                         |
-| `affinity`                           | Affinity settings for pod assignment                                          | `{}`                         |
+| Parameter                            | Description                                                                   | Default                           |
+| ------------------------------------ | ----------------------------------------------------------------------------- | --------------------------------- |
+| `image`                              | Container image name                                                          | `eventstore/eventstore`           |
+| `imageTag`                           | Container image tag                                                           | `release-4.1.1-hotfix1`           |
+| `imagePullPolicy`                    | Container pull policy                                                         | `IfNotPresent`                    |
+| `imagePullSecrets`                   | Specify image pull secrets                                                    | `nil`                             |
+| `clusterSize`                        | The number of nodes in the cluster                                            | `3`                               |
+| `admin.jobImage`                     | Post install Job image with `curl` installed for setting admin password       | `tutum/curl`                      |
+| `admin.jobImageTag`                  | Post install Job image tag                                                    | `latest`                          |
+| `admin.password`                     | Custom password for admin interface (should be set in separate file)          | `nil`                             |
+| `admin.serviceType`                  | Service type for the admin interface                                          | `ClusterIP`                       |
+| `admin.proxyImage`                   | NGINX image for admin interface proxy                                         | `nginx`                           |
+| `admin.proxyImageTag`                | NGINX image tag                                                               | `latest`                          |
+| `podDisruptionBudget.enabled`        | Enable a pod disruption budget for nodes                                      | `false`                           |
+| `podDisruptionBudget.minAvailable`   | Number of pods that must still be available after eviction                    | `2`                               |
+| `podDisruptionBudget.maxUnavailable` | Number of pods that can be unavailable after eviction                         | `nil`                             |
+| `extIp`                              | External IP address                                                           | `0.0.0.0`                         |
+| `intHttpPort`                        | Internal HTTP port                                                            | `2112`                            |
+| `extHttpPort`                        | External HTTP port                                                            | `2113`                            |
+| `intTcpPort`                         | Internal TCP port                                                             | `1112`                            |
+| `extTcpPort`                         | External TCP port                                                             | `1113`                            |
+| `gossipAllowedDiffMs`                | The amount of drift, in ms, between clocks on nodes before gossip is rejected | `600000`                          |
+| `eventStoreConfig`                   | Additional Event Store parameters                                             | `{}`                              |
+| `scavenging.enabled`                 | Enable the scavenging CronJob for all nodes                                   | `false`                           |
+| `scavenging.image`                   | The image to use for the scavenging CronJob                                   | `lachlanevenson/k8s-kubectl`      |
+| `scavenging.imageTag`                | The image tag use for the scavenging CronJob                                  | `latest`                          |
+| `scavenging.schedule`                | The schedule to use for the scavenging CronJob                                | `0 2 * * *`                       |
+| `persistence.enabled`                | Enable persistence using PVC                                                  | `false`                           |
+| `persistence.existingClaim`          | Provide an existing PVC                                                       | `nil`                             |
+| `persistence.accessMode`             | Access Mode for PVC                                                           | `ReadWriteOnce`                   |
+| `persistence.size`                   | Size of data volume                                                           | `8Gi`                             |
+| `persistence.mountPath`              | Mount path of data volume                                                     | `/var/lib/eventstore`             |
+| `persistence.annotations`            | Annotations for PVC                                                           | `{}`                              |
+| `resources`                          | CPU/Memory resource request/limits                                            | Memory: `256Mi`, CPU: `100m`      |
+| `nodeSelector`                       | Node labels for pod assignment                                                | `{}`                              |
+| `podAnnotations`                     | Pod annotations                                                               | `{}`                              |
+| `tolerations`                        | Toleration labels for pod assignment                                          | `[]`                              |
+| `affinity`                           | Affinity settings for pod assignment                                          | `{}`                              |
+| `metrics.enabled`                    | Enable a sidecar to export prometheus metrics                                 | `false`                           |
+| `metrics.image`                      | Docker repository from which to pull the metrics exporter image               | `marcinbudny/eventstore_exporter` |
+| `metrics.imageTag`                   | Metrics exporter image tag to pull                                            | `0.7.0`                           |
+| `metrics.port`                       | Metrics exporter port                                                         | `9448`                            |
+| `metrics.resources`                  | CPU/Memory resource requests/limits for the metrics exporter                  | `{}`                              |
+
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`
 or create a `values.yaml` file and use `helm install --values values.yaml`.

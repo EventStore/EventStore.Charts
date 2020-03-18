@@ -52,7 +52,7 @@ install_hostpath-provisioner() {
      kubectl delete storageclass standard
 
      echo "Install Hostpath Provisioner..."
-     docker exec -e HELM_HOST=127.0.0.1:44134 -e HELM_TILLER_SILENT=true "$config_container_id" helm upgrade --install hostpath-provisioner --namespace kube-system test/hostpath-provisioner-0.2.3.tgz
+     docker exec "$config_container_id" helm upgrade --install hostpath-provisioner --namespace kube-system test/hostpath-provisioner-0.2.3.tgz
      echo
 }
 
@@ -83,7 +83,7 @@ main() {
     echo
 
     # --- Work around for Tillerless Helm, till Helm v3 gets released --- #
-    run_tillerless
+    #run_tillerless
 
     # Install hostpath-provisioner for Dynammic PVC provisioning
     install_hostpath-provisioner

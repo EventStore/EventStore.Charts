@@ -1,5 +1,9 @@
 # Changelog 
-# 
+#
+## 0.2.6 December 31, 2019
+- Fixed 'helm install eventstore ./ --set clusterSize=3'
+- Updated e2e-docker4mac.sh test script to work with helm v3
+
 ## 0.2.5: August 30, 2019
 - __Potentially breaking__: Add release namespace to all resources to work with `helm template`
 See https://github.com/helm/helm/issues/5465 for more information.

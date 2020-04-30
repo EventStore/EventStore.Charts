@@ -81,6 +81,9 @@ The following table lists the configurable parameters of the Event Store chart a
 | `admin.serviceType`                  | Service type for the admin interface                                          | `ClusterIP`                  |
 | `admin.proxyImage`                   | NGINX image for admin interface proxy                                         | `nginx`                      |
 | `admin.proxyImageTag`                | NGINX image tag                                                               | `latest`                     |
+| `admin.nodeSelector`                 | Node labels for admin pod assignment                                          | `{}`                         |
+| `admin.tolerations`                  | Toleration labels admin for pod assignment                                    | `[]`                         |
+| `admin.affinity`                     | Affinity settings admin for pod assignment                                    | `{}`                         |
 | `podDisruptionBudget.enabled`        | Enable a pod disruption budget for nodes                                      | `false`                      |
 | `podDisruptionBudget.minAvailable`   | Number of pods that must still be available after eviction                    | `2`                          |
 | `podDisruptionBudget.maxUnavailable` | Number of pods that can be unavailable after eviction                         | `nil`                        |

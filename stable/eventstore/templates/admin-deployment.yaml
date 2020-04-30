@@ -26,6 +26,12 @@ spec:
 {{ toYaml .Values.podAnnotations | indent 8 }}
       {{- end }}
     spec:
+      nodeSelector:
+{{ toYaml .Values.admin.nodeSelector | indent 8 }}
+      affinity:
+{{ toYaml .Values.admin.affinity | indent 8 }}
+      tolerations:
+{{ toYaml .Values.admin.tolerations | indent 8 }}
       containers:
         - name: proxy
           image: "{{ .Values.admin.proxyImage }}:{{ .Values.admin.proxyImageTag }}"
